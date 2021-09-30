@@ -13,4 +13,14 @@ public class DataHBox extends HBox implements UserDataPanel {
             cellValue.writeToRow(data[number]);
         });
     }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public void add() {
+
+    }
 }

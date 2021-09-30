@@ -7,11 +7,35 @@
 <?import javafx.scene.layout.*?>
 
 <?import ru.durnov.model.RootPanel?>
+<?import ru.durnov.model.HeaderDataPanel?>
+<?import ru.durnov.model.DataPanel?>
+<?import ru.durnov.model.DataHBox?>
 <RootPanel xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="ru.durnov.TemplateController"
            fx:id="root"
            prefHeight="400.0" prefWidth="600.0">
+    <VBox>
+        <HeaderDataPanel id="header">
+        </HeaderDataPanel>
+        <DataPanel id="QF">
+            <DataHBox></DataHBox>
+        </DataPanel>
+        <DataPanel id="breakerBox">
+            <DataHBox></DataHBox>
+        </DataPanel>
+        <DataPanel id="UZOBox">
+            <DataHBox></DataHBox>
+        </DataPanel>
+        <DataPanel id="kabelBox">
+            <DataHBox></DataHBox>
+        </DataPanel>
+        <HBox>
+            <Button id="saveButton" text="Сохранить" onAction="#savePanel"></Button>
+            <Button id="clearButton" text="Очистить" onAction="#clear"></Button>
+        </HBox>
+    </VBox>
+
 
 
 </RootPanel>

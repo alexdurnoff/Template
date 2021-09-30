@@ -9,4 +9,14 @@ public class HeaderDataPanel extends ScrollPane implements UserDataPanel {
     public void writeData(Object[][] data) {
 
     }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public void add() {
+
+    }
 }

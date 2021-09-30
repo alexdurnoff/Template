@@ -1,7 +1,19 @@
 package ru.durnov;
 
-import javafx.scene.layout.AnchorPane;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import ru.durnov.model.RootPanel;
 
 public class TemplateController {
-    public AnchorPane root;
+    public RootPanel root;
+
+    @FXML
+    void savePanel(ActionEvent actionEvent){
+        root.writeToSpreadSheet();
+    }
+
+    @FXML
+    void clear(ActionEvent actionEvent){
+        root.clear();
+    }
 }

@@ -8,8 +8,12 @@ public class RootPanel extends AnchorPane {
     ObservableList<UserDataPanel> dataPanels;
     SpreadSheet spreadSheet;
 
-    void writeToSpreadSheet(){
+    public void writeToSpreadSheet(){
         Object[][] data = spreadSheet.data();
         dataPanels.forEach(dataPanel -> dataPanel.writeData(data));
+    }
+
+    public void clear(){
+
     }
 }
