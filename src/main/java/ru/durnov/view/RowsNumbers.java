@@ -1,4 +1,4 @@
-package ru.durnov.model;
+package ru.durnov.view;
 
 import java.util.List;
 
