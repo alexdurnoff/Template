@@ -9,6 +9,9 @@ import javafx.scene.layout.VBox;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
 import ru.durnov.view.unitData.breakers.BreakerUnitCreator;
+import ru.durnov.view.unitData.cables.CabelUnitCreator;
+import ru.durnov.view.unitData.reserv.ReservPanelData;
+import ru.durnov.view.unitData.uzo.UZOUnitCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +35,19 @@ public class TemplateController {
     private Button addUZOButton;
 
     @FXML
-    private Button addKabelButton;
+    private Button addCableButton;
 
     @FXML
     private VBox breakerVBox;
+
+    @FXML
+    private VBox cableVBox;
+
+    @FXML
+    private VBox uzoVBox;
+
+    @FXML
+    private TextField reservTextField;
 
 
     @FXML
@@ -49,7 +61,7 @@ public class TemplateController {
     }
 
     public void initialize(){
-        userPanelDataList.add(new HeaderPanelData(rowCount, panelName));
+        userPanelDataList.add(new HeaderPanelData(rowCount, panelName, breakerMark));
         List<UserPanelData> breakerPanelList = new ArrayList<>();
         userPanelDataList.add(
                 new TypePanelData(
@@ -61,6 +73,30 @@ public class TemplateController {
                         )
                 )
         );
+        List<UserPanelData> cablePanelList = new ArrayList<>();
+        userPanelDataList.add(
+                new TypePanelData(
+                        cablePanelList,
+                        addCableButton,
+                        new CabelUnitCreator(
+                                cableVBox.getChildren(),
+                                cablePanelList
+                        )
+                )
+        );
+
+        List<UserPanelData> uzoPanelList = new ArrayList<>();
+        userPanelDataList.add(
+                new TypePanelData(
+                        uzoPanelList,
+                        addUZOButton,
+                        new UZOUnitCreator(
+                                uzoVBox.getChildren(),
+                                cablePanelList
+                        )
+                )
+        );
+        userPanelDataList.add(new ReservPanelData(reservTextField));
 
     }
 

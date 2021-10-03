@@ -56,7 +56,7 @@
                 -fx-border-color: blue;
                 -fx-border-radius:3px;
                 -fx-padding: 9px; -fx-background-color: GAINSBORO">
-            <VBox fx:id="UZOVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
+            <VBox fx:id="uzoVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
                     <Label text="Панель УЗО" prefWidth="200" textAlignment="CENTER"></Label>
                     <Button text="+" fx:id="addUZOButton"></Button>
@@ -74,10 +74,10 @@
                 -fx-border-color: blue;
                 -fx-border-radius:3px;
                 -fx-padding: 9px; -fx-background-color: GAINSBORO">
-            <VBox fx:id="kabelVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
+            <VBox fx:id="cableVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
                     <Label text="Панель кабелей" prefWidth="200" textAlignment="CENTER"></Label>
-                    <Button text="+" fx:id="addKabelButton"></Button>
+                    <Button text="+" fx:id="addCableButton"></Button>
                 </HBox>
             </VBox>
         </ScrollPane>

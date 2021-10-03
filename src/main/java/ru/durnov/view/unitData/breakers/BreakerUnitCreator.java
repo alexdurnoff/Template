@@ -17,7 +17,6 @@ import ru.durnov.view.unitData.Numbers;
 import java.util.List;
 
 public class BreakerUnitCreator implements UnitDataCreator {
-    private final TextField textField = new TextField();
     private final ObservableList<Node> children;
     private final List<UserPanelData> userPanelDataList;
     private String value = "";
@@ -33,7 +32,7 @@ public class BreakerUnitCreator implements UnitDataCreator {
     @Override
     public UserPanelData createUserPanelData(List<UserPanelData> userPanelDataList) {
         UserPanelData userPanelData = new UnitPanelData(
-                new Numbers(textField),
+                new Numbers(new TextField()),
                 new BreakerRow(value, breakerType, currentValue)
         );
         userPanelDataList.add(userPanelData);
@@ -45,18 +44,21 @@ public class BreakerUnitCreator implements UnitDataCreator {
         HBox hBox = new HBox();
         hBox.setSpacing(5);
         ComboBox<String> breakerBox = new ComboBox<>();
+        breakerBox.setPrefWidth(150);
         breakerBox.setItems(new Breakers().items());
         breakerBox.setOnAction(ae -> value = breakerBox.getValue());
         Label label = new Label("Тип автомата");
         VBox breakerNameVBox = new VBox(label, breakerBox);
         breakerNameVBox.setSpacing(3);
         ComboBox<String> breakerTypeComboBox = new ComboBox<>();
+        breakerTypeComboBox.setPrefWidth(150);
         breakerTypeComboBox.setItems(new BreakerTypes().items());
         breakerTypeComboBox.setOnAction(ae -> breakerType = breakerTypeComboBox.getValue());
         VBox breakerTypeVBox = new VBox();
         breakerTypeVBox.setSpacing(3);
         breakerTypeVBox.getChildren().addAll(new Label("Тип расцепителя"), breakerTypeComboBox);
         TextField currentField = new TextField();
+        currentField.setPrefWidth(150);
         currentField.setOnAction(ae -> {
             currentValue = new CurrentValue(currentField).value();
         });
@@ -70,7 +72,10 @@ public class BreakerUnitCreator implements UnitDataCreator {
                 this.userPanelDataList.remove(userPanelData);
             }
         });
-        hBox.getChildren().addAll(breakerNameVBox, breakerTypeVBox, currentVBox, removeButton);
+        Label removeLabel = new Label("Удалить");
+        VBox removeButtonBox = new VBox(removeLabel,removeButton);
+        removeButtonBox.setSpacing(3);
+        hBox.getChildren().addAll(breakerNameVBox, breakerTypeVBox, currentVBox, removeButtonBox);
         this.children.add(hBox);
     }
 }
