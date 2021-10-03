@@ -12,72 +12,97 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ru.durnov.TemplateController"
             fx:id="root"
-            prefHeight="700.0" prefWidth="1300.">
+            prefHeight="700.0" prefWidth="1300." style="-fx-background-color: GAINSBORO">
     <HBox AnchorPane.leftAnchor="10"
           AnchorPane.rightAnchor="10"
           AnchorPane.topAnchor="10" spacing="20"
           style="-fx-border-style: solid; -fx-border-width:2px; -fx-border-color: blue; -fx-border-radius:3px; -fx-padding: 15px">
-        <VBox prefWidth="150" spacing="5">
-            <Label text="Тип маркировки"></Label>
-            <ComboBox fx:id="breakerMark"></ComboBox>
+        <VBox prefWidth="300" spacing="5">
+            <Label text="Тип маркировки автоматов"></Label>
+            <ComboBox prefWidth="200" fx:id="breakerMark"></ComboBox>
         </VBox>
-        <VBox spacing="5">
+        <VBox prefWidth="300" spacing="5">
+            <Label text="Тип маркировки линий"></Label>
+            <ComboBox prefWidth="200" fx:id="purposeMark"></ComboBox>
+        </VBox>
+        <VBox prefWidth="300" spacing="5">
             <Label text="Наименование щита"></Label>
             <TextField fx:id="panelName" prefWidth="400"></TextField>
         </VBox>
-        <VBox spacing="5">
+        <VBox prefWidth="300" spacing="5">
             <Label text="Количество строк"></Label>
             <TextField fx:id="rowCount" prefWidth="150"></TextField>
         </VBox>
     </HBox>
-    <ScrollPane AnchorPane.topAnchor="100"
-                AnchorPane.leftAnchor="10"
-                AnchorPane.rightAnchor="10"
-                prefHeight="150"
-                style="-fx-border-style: solid;
+    <HBox AnchorPane.leftAnchor="10"
+          AnchorPane.rightAnchor="10"
+          AnchorPane.topAnchor="100" spacing="20">
+        <ScrollPane prefHeight="250" prefWidth="640"
+                    style="-fx-border-style: solid;
                  -fx-border-width:2px;
                  -fx-border-color: blue;
                  -fx-border-radius:3px;
-                 -fx-padding: 9px">
-        <VBox fx:id="breakerVBox" spacing="10">
-            <HBox spacing="10">
-                <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER"></Label>
-                <Button text="+" fx:id="addBreakerButton"></Button>
-            </HBox>
-        </VBox>
-    </ScrollPane>
-    <ScrollPane AnchorPane.topAnchor="300"
-                AnchorPane.leftAnchor="10"
-                AnchorPane.rightAnchor="10"
-                prefHeight="150"
-                style="-fx-border-style: solid;
+                 -fx-padding: 9px; -fx-background-color: GAINSBORO">
+            <VBox fx:id="breakerVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
+                <HBox spacing="10">
+                    <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER"></Label>
+                    <Button text="+" fx:id="addBreakerButton"></Button>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+        <ScrollPane prefHeight="250" prefWidth="640"
+                    style="-fx-border-style: solid;
                 -fx-border-width:2px;
                 -fx-border-color: blue;
                 -fx-border-radius:3px;
-                -fx-padding: 9px">
-        <VBox fx:id="UZOVBox" spacing="10">
-            <HBox spacing="10">
-                <Label text="Панель УЗО" prefWidth="200" textAlignment="CENTER"></Label>
-                <Button text="+" fx:id="addUZOButton"></Button>
-            </HBox>
-        </VBox>
-    </ScrollPane>
-    <ScrollPane AnchorPane.topAnchor="500"
-                AnchorPane.leftAnchor="10"
-                AnchorPane.rightAnchor="10"
-                prefHeight="150"
-                style="-fx-border-style: solid;
+                -fx-padding: 9px; -fx-background-color: GAINSBORO">
+            <VBox fx:id="UZOVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
+                <HBox spacing="10">
+                    <Label text="Панель УЗО" prefWidth="200" textAlignment="CENTER"></Label>
+                    <Button text="+" fx:id="addUZOButton"></Button>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </HBox>
+
+    <HBox AnchorPane.leftAnchor="10"
+          AnchorPane.rightAnchor="10"
+          AnchorPane.topAnchor="400" spacing="20">
+        <ScrollPane prefHeight="250" prefWidth="640"
+                    style="-fx-border-style: solid;
                 -fx-border-width:2px;
                 -fx-border-color: blue;
                 -fx-border-radius:3px;
-                -fx-padding: 9px">
-        <VBox fx:id="kabelVBox" spacing="10">
-            <HBox spacing="10">
-                <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER"></Label>
-                <Button text="+" fx:id="addKabelButton"></Button>
-            </HBox>
-        </VBox>
-    </ScrollPane>
+                -fx-padding: 9px; -fx-background-color: GAINSBORO">
+            <VBox fx:id="kabelVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
+                <HBox spacing="10">
+                    <Label text="Панель кабелей" prefWidth="200" textAlignment="CENTER"></Label>
+                    <Button text="+" fx:id="addKabelButton"></Button>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+        <ScrollPane prefHeight="250" prefWidth="640"
+                    style="-fx-border-style: solid;
+                -fx-border-width:2px;
+                -fx-border-color: blue;
+                -fx-border-radius:3px;
+                -fx-padding: 9px; -fx-background-color: GAINSBORO">
+            <VBox fx:id="reservBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
+                <HBox spacing="10">
+                    <VBox prefWidth="600" spacing="10">
+                        <Label text="Панель резервных линий" prefWidth="200" textAlignment="CENTER"></Label>
+                        <HBox prefWidth="600" spacing="10">
+                            <Label text="Добавить номера линий"></Label>
+                            <TextField fx:id="reservTextField" prefWidth="400"></TextField>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+
+    </HBox>
+
+
     <HBox spacing="10"
           AnchorPane.bottomAnchor="10"
           AnchorPane.leftAnchor="10"
