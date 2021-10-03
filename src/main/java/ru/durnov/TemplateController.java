@@ -92,7 +92,7 @@ public class TemplateController {
                         addUZOButton,
                         new UZOUnitCreator(
                                 uzoVBox.getChildren(),
-                                cablePanelList
+                                uzoPanelList
                         )
                 )
         );
