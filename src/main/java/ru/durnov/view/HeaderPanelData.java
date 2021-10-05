@@ -24,7 +24,7 @@ public class HeaderPanelData implements UserPanelData {
             Object[] headerRow = data[0];
             headerRow[1] = panelName.getText();
             BreakerMark breakerMark = new BreakerMark(breakerComboBox.getValue());
-            for (int i = 1; i <=count; i++){
+            for (int i = 1; i <count; i++){
                 Object[] row = data[i];
                 breakerMark.writeMark(row);
             }

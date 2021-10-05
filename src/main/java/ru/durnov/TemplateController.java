@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import remoteoffice.ControlRemoteOffice;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
 import ru.durnov.view.unitData.breakers.BreakerUnitCreator;
@@ -57,11 +56,15 @@ public class TemplateController {
     @FXML
     public void savePanel(ActionEvent actionEvent) throws BootstrapException, Exception {
         int count = Integer.parseInt(this.rowCount.getText());
-        Object[][] data = new Object[count][];
+        Object[][] data = new Object[count+1][19];
         this.userPanelDataList.forEach(userPanelData -> {
             userPanelData.writeData(data);
         });
+        System.out.println("data is ready");
+        System.out.println(data);
         int startRow = new StartRow(ControlRemoteOffice.getCurrentSpreadsheet("Черновик")).startRow();
+        XSpreadsheet xSpreadsheet = ControlRemoteOffice.getCurrentSpreadsheet("Черновик");
+        ControlRemoteOffice.copyDataArrayToSpreadsheet(data, 0, startRow, 19, xSpreadsheet);
     }
 
     @FXML

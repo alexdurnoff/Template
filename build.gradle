@@ -41,8 +41,8 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-base', version: '17.0.0.1'
     // https://mvnrepository.com/artifact/org.odftoolkit/simple-odf
     implementation group: 'org.odftoolkit', name: 'simple-odf', version: '0.9.0-RC1'
-    implementation fileTree(include: ['*.jar'], dir: '/opt/libreoffice7.1/program/classes')
-    implementation files('libs/OfficeConnect.jar')
+    implementation fileTree(include: ['*.jar'], dir: '/opt/libreoffice7.2/program/classes')
+    //implementation files('libs/OfficeConnect.jar')
     testImplementation "org.testfx:testfx-core:4.0.16-alpha"
 }
 

@@ -1,6 +1,7 @@
 package ru.durnov.view;
 
-import remoteoffice.ControlRemoteOffice;
+
+import ru.durnov.ControlRemoteOffice;
 
 public class TemplateSpreadSheet implements SpreadSheet {
 
