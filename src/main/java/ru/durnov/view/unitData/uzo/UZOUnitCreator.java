@@ -11,11 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import ru.durnov.UserPanelData;
-import ru.durnov.view.LinesVBox;
-import ru.durnov.view.UnitDataCreator;
-import ru.durnov.view.UnitPanelData;
+import ru.durnov.view.*;
 import ru.durnov.view.unitData.Numbers;
-import ru.durnov.view.unitData.breakers.BreakerRow;
 
 import java.util.List;
 
@@ -53,6 +50,29 @@ public class UZOUnitCreator implements UnitDataCreator {
         uzoTypeLabel.setTextAlignment(TextAlignment.CENTER);
         uzoTypeLabel.setAlignment(Pos.CENTER);
         uzoTypeLabel.setPrefWidth(200);
+        HBox uzoTypeHBox = createUzoTypeHBox();
+        VBox uzoTypeVBox = new NodeWithLabelVBox(uzoTypeLabel, uzoTypeHBox);
+        VBox uzoNominalCurrentVBox = new NodeWithLabelVBox(createUzoNominalTextField(), "Ном. ток");
+        VBox uzoDifCurrentVBox = new NodeWithLabelVBox(new ComboBox<>(UzoUtils.difCurrentItems()), "Дифф. ток");
+        ComboBox<String> uzoDifCurrentTypeComboBox = new ComboBox<>(UzoUtils.difCurrentTypeItems());
+        uzoDifCurrentTypeComboBox.setValue("AC");
+        VBox uzoDifCurrentTypeVBox = new NodeWithLabelVBox(uzoDifCurrentTypeComboBox, "Тип дифф. тока");
+        Button removeButton = new Button("-");
+        removeButton.setOnAction(ae -> {
+            this.children.remove(hBox);
+            if (this.uzoPanelList != null){
+                this.uzoPanelList.remove(userPanelData);
+            }
+        });
+        VBox linesBox = new NumberVBox(textField);
+        Label removeLabel = new Label("Удалить");
+        VBox removeButtonBox = new VBox(removeLabel,removeButton);
+        removeButtonBox.setSpacing(3);
+        hBox.getChildren().addAll(uzoTypeVBox, uzoNominalCurrentVBox, uzoDifCurrentVBox, uzoDifCurrentTypeVBox, linesBox, removeButtonBox);
+        this.children.add(hBox);
+    }
+
+    HBox createUzoTypeHBox(){
         ComboBox<String> uzoTypeComboBox = new ComboBox<>(UzoUtils.typeItems());
         uzoTypeComboBox.setPrefWidth(100);
         TextField uzoTypeField = new TextField();
@@ -63,37 +83,15 @@ public class UZOUnitCreator implements UnitDataCreator {
         }));
         HBox uzoTypeHBox = new HBox(uzoTypeComboBox, uzoTypeField);
         uzoTypeHBox.setSpacing(5);
-        VBox uzoTypeVBox = new VBox(uzoTypeLabel, uzoTypeHBox);
-        uzoTypeVBox.setSpacing(5);
-        Label uzoNominalCurrentLabel = new Label("Ном. ток");
+        return uzoTypeHBox;
+    }
+
+    TextField createUzoNominalTextField(){
         TextField uzoNominalCurrentTextField = new TextField();
         uzoNominalCurrentTextField.setPrefWidth(50);
         uzoNominalCurrentTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
             this.nominalCurrent = uzoNominalCurrentTextField.getText();
         }));
-        VBox uzoNominalCurrentVBox = new VBox(uzoNominalCurrentLabel, uzoNominalCurrentTextField);
-        uzoNominalCurrentVBox.setSpacing(5);
-        Label uzoDifCurrentLabel = new Label("Дифф. ток");
-        ComboBox<String> uzoDifCurrentComboBox = new ComboBox<>(UzoUtils.difCurrentItems());
-        VBox uzoDifCurrentVBox = new VBox(uzoDifCurrentLabel, uzoDifCurrentComboBox);
-        uzoDifCurrentVBox.setSpacing(5);
-        Label uzoDifCurrentTypeLabel = new Label("Тип дифф. тока");
-        ComboBox<String> uzoDifCurrentTypeComboBox = new ComboBox<>(UzoUtils.difCurrentTypeItems());
-        uzoDifCurrentTypeComboBox.setValue("AC");
-        VBox uzoDifCurrentTypeVBox = new VBox(uzoDifCurrentTypeLabel, uzoDifCurrentTypeComboBox);
-        uzoDifCurrentTypeVBox.setSpacing(5);
-        Button removeButton = new Button("-");
-        removeButton.setOnAction(ae -> {
-            this.children.remove(hBox);
-            if (this.uzoPanelList != null){
-                this.uzoPanelList.remove(userPanelData);
-            }
-        });
-        VBox linesBox = new LinesVBox(textField);
-        Label removeLabel = new Label("Удалить");
-        VBox removeButtonBox = new VBox(removeLabel,removeButton);
-        removeButtonBox.setSpacing(3);
-        hBox.getChildren().addAll(uzoTypeVBox, uzoNominalCurrentVBox, uzoDifCurrentVBox, uzoDifCurrentTypeVBox, linesBox, removeButtonBox);
-        this.children.add(hBox);
+        return uzoNominalCurrentTextField;
     }
 }

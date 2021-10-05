@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ru.durnov.UserPanelData;
 import ru.durnov.model.Breakers;
+import ru.durnov.view.NodeWithLabelVBox;
+import ru.durnov.view.NumberVBox;
 import ru.durnov.view.UnitDataCreator;
 import ru.durnov.view.UnitPanelData;
 import ru.durnov.view.unitData.Numbers;
@@ -22,6 +24,7 @@ public class BreakerUnitCreator implements UnitDataCreator {
     private String value = "";
     private String breakerType = "";
     private String currentValue = "";
+    private TextField textField;
 
 
     public BreakerUnitCreator(ObservableList<Node> children, List<UserPanelData> unitPanelData) {
@@ -31,8 +34,9 @@ public class BreakerUnitCreator implements UnitDataCreator {
 
     @Override
     public UserPanelData createUserPanelData(List<UserPanelData> userPanelDataList) {
+        this.textField = new TextField();
         UserPanelData userPanelData = new UnitPanelData(
-                new Numbers(new TextField()),
+                new Numbers(textField),
                 new BreakerRow(value, breakerType, currentValue)
         );
         userPanelDataList.add(userPanelData);
@@ -43,28 +47,10 @@ public class BreakerUnitCreator implements UnitDataCreator {
     public void createNode(UserPanelData userPanelData) {
         HBox hBox = new HBox();
         hBox.setSpacing(5);
-        ComboBox<String> breakerBox = new ComboBox<>();
-        breakerBox.setPrefWidth(150);
-        breakerBox.setItems(new Breakers().items());
-        breakerBox.setOnAction(ae -> value = breakerBox.getValue());
-        Label label = new Label("Тип автомата");
-        VBox breakerNameVBox = new VBox(label, breakerBox);
-        breakerNameVBox.setSpacing(3);
-        ComboBox<String> breakerTypeComboBox = new ComboBox<>();
-        breakerTypeComboBox.setPrefWidth(150);
-        breakerTypeComboBox.setItems(new BreakerTypes().items());
-        breakerTypeComboBox.setOnAction(ae -> breakerType = breakerTypeComboBox.getValue());
-        VBox breakerTypeVBox = new VBox();
-        breakerTypeVBox.setSpacing(3);
-        breakerTypeVBox.getChildren().addAll(new Label("Тип расцепителя"), breakerTypeComboBox);
-        TextField currentField = new TextField();
-        currentField.setPrefWidth(150);
-        currentField.setOnAction(ae -> {
-            currentValue = new CurrentValue(currentField).value();
-        });
-        VBox currentVBox = new VBox();
-        currentVBox.setSpacing(3);
-        currentVBox.getChildren().addAll(new Label("Ток расцепителя"), currentField);
+        VBox breakerNameVBox = new NodeWithLabelVBox(createBreakerBox(), "Тип автомата");
+        VBox breakerTypeVBox = new NodeWithLabelVBox(createBreakerTypeComboBox(), "Тип расцепителя");
+        VBox currentVBox = new NodeWithLabelVBox(createCurrentTextField(), "ток расцепителя");
+        VBox numbersVBox = new NumberVBox(this.textField);
         Button removeButton = new Button("-");
         removeButton.setOnAction(ae -> {
             this.children.remove(hBox);
@@ -72,10 +58,34 @@ public class BreakerUnitCreator implements UnitDataCreator {
                 this.userPanelDataList.remove(userPanelData);
             }
         });
-        Label removeLabel = new Label("Удалить");
-        VBox removeButtonBox = new VBox(removeLabel,removeButton);
-        removeButtonBox.setSpacing(3);
-        hBox.getChildren().addAll(breakerNameVBox, breakerTypeVBox, currentVBox, removeButtonBox);
+        VBox removeButtonBox = new NodeWithLabelVBox(removeButton, "Удалить");
+        hBox.getChildren().addAll(breakerNameVBox, breakerTypeVBox, currentVBox, numbersVBox, removeButtonBox);
         this.children.add(hBox);
+    }
+
+    ComboBox<String> createBreakerBox(){
+        ComboBox<String> breakerBox = new ComboBox<>();
+        breakerBox.setPrefWidth(150);
+        breakerBox.setItems(new Breakers().items());
+        breakerBox.setOnAction(ae -> value = breakerBox.getValue());
+        return breakerBox;
+    }
+
+
+    ComboBox<String> createBreakerTypeComboBox(){
+        ComboBox<String> breakerTypeComboBox = new ComboBox<>();
+        breakerTypeComboBox.setPrefWidth(150);
+        breakerTypeComboBox.setItems(new BreakerTypes().items());
+        breakerTypeComboBox.setOnAction(ae -> breakerType = breakerTypeComboBox.getValue());
+        return breakerTypeComboBox;
+    }
+
+    TextField createCurrentTextField(){
+        TextField currentField = new TextField();
+        currentField.setPrefWidth(150);
+        currentField.setOnAction(ae -> {
+            currentValue = new CurrentValue(currentField).value();
+        });
+        return currentField;
     }
 }

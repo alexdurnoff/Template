@@ -1,11 +1,16 @@
 package ru.durnov;
 
+import com.sun.star.comp.helper.BootstrapException;
+import com.sun.star.lang.IndexOutOfBoundsException;
+import com.sun.star.sheet.XSpreadsheet;
+import com.sun.star.uno.Exception;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import remoteoffice.ControlRemoteOffice;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
 import ru.durnov.view.unitData.breakers.BreakerUnitCreator;
@@ -49,15 +54,22 @@ public class TemplateController {
     @FXML
     private TextField reservTextField;
 
-
     @FXML
-    public void savePanel(ActionEvent actionEvent){
-
+    public void savePanel(ActionEvent actionEvent) throws BootstrapException, Exception {
+        int count = Integer.parseInt(this.rowCount.getText());
+        Object[][] data = new Object[count][];
+        this.userPanelDataList.forEach(userPanelData -> {
+            userPanelData.writeData(data);
+        });
+        int startRow = new StartRow(ControlRemoteOffice.getCurrentSpreadsheet("Черновик")).startRow();
     }
 
     @FXML
     public void clear(ActionEvent actionEvent){
-
+        this.userPanelDataList.clear();
+        breakerVBox.getChildren().clear();
+        uzoVBox.getChildren().clear();
+        cableVBox.getChildren().clear();
     }
 
     public void initialize(){
@@ -98,6 +110,24 @@ public class TemplateController {
         );
         userPanelDataList.add(new ReservPanelData(reservTextField));
 
+    }
+
+    static class StartRow{
+        private final XSpreadsheet xSpreadsheet;
+
+        public StartRow(XSpreadsheet xSpreadsheet) {
+            this.xSpreadsheet = xSpreadsheet;
+        }
+
+        public int startRow() throws IndexOutOfBoundsException {
+            int row = 0;
+            String B = xSpreadsheet.getCellByPosition(1, row).getFormula();
+            while ( B != null && ! B.isEmpty()){
+                row++;
+                 B = xSpreadsheet.getCellByPosition(1, row).getFormula();
+            }
+            return row;
+        }
     }
 
 
