@@ -18,4 +18,9 @@ public class ReservPanelData implements UserPanelData {
             row[1] = "резерв";
         });
     }
+
+    @Override
+    public void clear() {
+
+    }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface UnitDataCreator {
     UserPanelData createUserPanelData(List<UserPanelData> userPanelDataList);
-    void createNode(UserPanelData userPanelData);
+    void clear();
 }

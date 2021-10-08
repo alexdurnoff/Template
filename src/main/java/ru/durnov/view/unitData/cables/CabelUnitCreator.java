@@ -15,14 +15,12 @@ import ru.durnov.view.UnitDataCreator;
 import ru.durnov.view.UnitPanelData;
 import ru.durnov.view.unitData.Numbers;
 
+import java.awt.*;
 import java.util.List;
 
 public class CabelUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> cablePanelList;
-    private String type = "";
-    private String conductors = "";
-    private TextField textField;
 
     public CabelUnitCreator(ObservableList<Node> children, List<UserPanelData> cablePanelList) {
         this.children = children;
@@ -31,22 +29,33 @@ public class CabelUnitCreator implements UnitDataCreator {
 
     @Override
     public UserPanelData createUserPanelData(List<UserPanelData> userPanelDataList) {
-        this.textField = new TextField();
+        TextField numbersTextField = new TextField();
+        TextField conductors = new TextField();
+        ComboBox<String> type = createCableTypeComboBox();
         UserPanelData userPanelData = new UnitPanelData(
-                new Numbers(textField),
+                new Numbers(numbersTextField),
                 new CableRow(type, conductors)
         );
         userPanelDataList.add(userPanelData);
+        createNode(numbersTextField, userPanelData, type, conductors);
         return userPanelData;
     }
 
     @Override
-    public void createNode(UserPanelData userPanelData) {
+    public void clear() {
+        this.children.clear();
+    }
+
+
+    public void createNode(TextField numbersTextField,
+                           UserPanelData userPanelData,
+                           ComboBox<String> type,
+                           TextField conductors) {
         HBox hBox = new HBox();
         hBox.setSpacing(5);
         VBox cableTypeVBox = new NodeWithLabelVBox(createCableTypeComboBox(), "Тип кабеля");
-        VBox conductorsVBox = createConductorsVBox();
-        VBox numbersVBox= new NumberVBox(textField);
+        VBox conductorsVBox = createConductorsVBox(conductors);
+        VBox numbersVBox= new NumberVBox(numbersTextField);
         Button removeButton = new Button("-");
         removeButton.setOnAction(ae -> {
             this.children.remove(hBox);
@@ -62,19 +71,13 @@ public class CabelUnitCreator implements UnitDataCreator {
     }
 
     ComboBox<String> createCableTypeComboBox(){
-        ComboBox<String> cableTypeComboBox = new ComboBox<>(CableUtils.typeItems());
-        cableTypeComboBox.setOnAction(ae -> type=cableTypeComboBox.getValue());
-        return cableTypeComboBox;
+        return new ComboBox<>(CableUtils.typeItems());
     }
 
-    VBox createConductorsVBox(){
+    VBox createConductorsVBox(TextField conductors){
         ComboBox<String> conductorsComboBox = new ComboBox<>(CableUtils.conductorsItems());
-        TextField conductorsTextField = new TextField();
-        conductorsTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
-            this.conductors = newValue;
-        }));
-        conductorsComboBox.setOnAction(ae -> conductorsTextField.setText(conductorsComboBox.getValue()));
-        HBox conductorsTextFieldHBox = new HBox(conductorsComboBox, conductorsTextField);
+        conductorsComboBox.setOnAction(ae -> conductors.setText(conductorsComboBox.getValue()));
+        HBox conductorsTextFieldHBox = new HBox(conductorsComboBox, conductors);
         conductorsTextFieldHBox.setSpacing(5);
         VBox conductorsVBox = new NodeWithLabelVBox(conductorsTextFieldHBox, "Количество и сечение проводников");
         conductorsVBox.setSpacing(5);

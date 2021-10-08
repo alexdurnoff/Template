@@ -18,4 +18,9 @@ public class UnitPanelData implements UserPanelData {
             row.writeToRow(data[number]);
         });
     }
+
+    @Override
+    public void clear() {
+
+    }
 }

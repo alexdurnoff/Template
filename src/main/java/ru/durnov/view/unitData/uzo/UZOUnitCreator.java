@@ -19,11 +19,6 @@ import java.util.List;
 public class UZOUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> uzoPanelList;
-    private TextField textField;
-    private String uzoType = "";
-    private String nominalCurrent = "";
-    private String difCurrent = "";
-    private String currentType = "AC";
 
 
     public UZOUnitCreator(ObservableList<Node> children, List<UserPanelData> uzoPanelList) {
@@ -33,30 +28,52 @@ public class UZOUnitCreator implements UnitDataCreator {
 
     @Override
     public UserPanelData createUserPanelData(List<UserPanelData> userPanelDataList) {
-        this.textField = new TextField();
+        TextField numbersTextField = new TextField();
+        TextField uzoType = new TextField();
+        TextField nominalCurrent = createUzoNominalTextField();
+        ComboBox<String> difCurrent = createDifCurrentComboBox();
+        ComboBox<String>currentType = createCurrentTypeComboBox();
         UserPanelData userPanelData = new UnitPanelData(
-                new Numbers(this.textField),
+                new Numbers(numbersTextField),
                 new UzoRow(uzoType, nominalCurrent, difCurrent, currentType)
         );
         userPanelDataList.add(userPanelData);
+        createNode(numbersTextField, uzoType, nominalCurrent, difCurrent, currentType, userPanelData);
         return userPanelData;
     }
 
     @Override
-    public void createNode(UserPanelData userPanelData) {
+    public void clear() {
+        this.children.clear();
+    }
+
+    private ComboBox<String> createCurrentTypeComboBox() {
+        ComboBox<String> uzoDifCurrentTypeComboBox = new ComboBox<>(UzoUtils.difCurrentTypeItems());
+        uzoDifCurrentTypeComboBox.setValue("AC");
+        return uzoDifCurrentTypeComboBox;
+    }
+
+    private ComboBox<String> createDifCurrentComboBox() {
+        return new ComboBox<>(UzoUtils.difCurrentItems());
+    }
+
+    public void createNode(TextField numbersTextField,
+                           TextField uzoType,
+                           TextField nominalCurrent,
+                           ComboBox<String> difCurrent,
+                           ComboBox<String> currentType,
+                           UserPanelData userPanelData)  {
         HBox hBox = new HBox();
         hBox.setSpacing(5);
         Label uzoTypeLabel = new Label("Тип УЗО");
         uzoTypeLabel.setTextAlignment(TextAlignment.CENTER);
         uzoTypeLabel.setAlignment(Pos.CENTER);
         uzoTypeLabel.setPrefWidth(200);
-        HBox uzoTypeHBox = createUzoTypeHBox();
+        HBox uzoTypeHBox = createUzoTypeHBox(uzoType);
         VBox uzoTypeVBox = new NodeWithLabelVBox(uzoTypeLabel, uzoTypeHBox);
-        VBox uzoNominalCurrentVBox = new NodeWithLabelVBox(createUzoNominalTextField(), "Ном. ток");
-        VBox uzoDifCurrentVBox = new NodeWithLabelVBox(new ComboBox<>(UzoUtils.difCurrentItems()), "Дифф. ток");
-        ComboBox<String> uzoDifCurrentTypeComboBox = new ComboBox<>(UzoUtils.difCurrentTypeItems());
-        uzoDifCurrentTypeComboBox.setValue("AC");
-        VBox uzoDifCurrentTypeVBox = new NodeWithLabelVBox(uzoDifCurrentTypeComboBox, "Тип дифф. тока");
+        VBox uzoNominalCurrentVBox = new NodeWithLabelVBox(nominalCurrent, "Ном. ток");
+        VBox uzoDifCurrentVBox = new NodeWithLabelVBox(difCurrent, "Дифф. ток");
+        VBox uzoDifCurrentTypeVBox = new NodeWithLabelVBox(currentType, "Тип дифф. тока");
         Button removeButton = new Button("-");
         removeButton.setOnAction(ae -> {
             this.children.remove(hBox);
@@ -64,7 +81,7 @@ public class UZOUnitCreator implements UnitDataCreator {
                 this.uzoPanelList.remove(userPanelData);
             }
         });
-        VBox linesBox = new NumberVBox(textField);
+        VBox linesBox = new NumberVBox(numbersTextField);
         Label removeLabel = new Label("Удалить");
         VBox removeButtonBox = new VBox(removeLabel,removeButton);
         removeButtonBox.setSpacing(3);
@@ -72,14 +89,14 @@ public class UZOUnitCreator implements UnitDataCreator {
         this.children.add(hBox);
     }
 
-    HBox createUzoTypeHBox(){
+    HBox createUzoTypeHBox(TextField uzoType){
         ComboBox<String> uzoTypeComboBox = new ComboBox<>(UzoUtils.typeItems());
         uzoTypeComboBox.setPrefWidth(100);
         TextField uzoTypeField = new TextField();
         uzoTypeField.setPrefWidth(100);
         uzoTypeComboBox.setOnAction(ae -> uzoTypeField.setText(uzoTypeComboBox.getValue()));
         uzoTypeField.textProperty().addListener(((observable, oldValue, newValue) -> {
-            this.uzoType = newValue;
+            uzoType.setText(newValue);
         }));
         HBox uzoTypeHBox = new HBox(uzoTypeComboBox, uzoTypeField);
         uzoTypeHBox.setSpacing(5);
@@ -89,9 +106,6 @@ public class UZOUnitCreator implements UnitDataCreator {
     TextField createUzoNominalTextField(){
         TextField uzoNominalCurrentTextField = new TextField();
         uzoNominalCurrentTextField.setPrefWidth(50);
-        uzoNominalCurrentTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
-            this.nominalCurrent = uzoNominalCurrentTextField.getText();
-        }));
         return uzoNominalCurrentTextField;
     }
 }

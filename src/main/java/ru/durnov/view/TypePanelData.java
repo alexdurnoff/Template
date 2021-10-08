@@ -8,15 +8,16 @@ import java.util.List;
 
 public class TypePanelData implements UserPanelData {
     private final List<UserPanelData> panelDataList;
+    private final UnitDataCreator unitDataCreator;
 
 
     public TypePanelData(List<UserPanelData> panelDataList,
                          Button button,
                          UnitDataCreator unitDataCreator) {
         this.panelDataList = panelDataList;
+        this.unitDataCreator = unitDataCreator;
         button.setOnAction(ae -> {
-            UserPanelData userPanelData = unitDataCreator.createUserPanelData(this.panelDataList);
-            unitDataCreator.createNode(userPanelData);
+            unitDataCreator.createUserPanelData(this.panelDataList);
         });
     }
 
@@ -26,5 +27,11 @@ public class TypePanelData implements UserPanelData {
         this.panelDataList.forEach(userPanelData -> {
             userPanelData.writeData(data);
         });
+    }
+
+    @Override
+    public void clear() {
+        this.panelDataList.clear();
+        this.unitDataCreator.clear();
     }
 }

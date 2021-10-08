@@ -45,8 +45,8 @@
                  -fx-padding: 9px; -fx-background-color: GAINSBORO">
             <VBox fx:id="breakerVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
-                    <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER"></Label>
-                    <Button text="+" fx:id="addBreakerButton"></Button>
+                    <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER" id="breakerLabel"></Label>
+                    <Button text="+" fx:id="addBreakerButton" id="breakerButton"></Button>
                 </HBox>
             </VBox>
         </ScrollPane>

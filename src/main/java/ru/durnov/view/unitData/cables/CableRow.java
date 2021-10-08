@@ -1,22 +1,25 @@
 package ru.durnov.view.unitData.cables;
 
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import ru.durnov.view.Row;
 
 public class CableRow implements Row {
-    private final String type;
-    private final String conductors;
+    private final ComboBox<String> type;
+    private final TextField conductors;
     private final FazaValue fazaValue = new FazaValue();
 
-    public CableRow(String type, String conductors) {
+    public CableRow(ComboBox<String> type, TextField conductors) {
         this.type = type;
         this.conductors = conductors;
     }
 
     @Override
     public void writeToRow(Object[] dataRow) {
-        dataRow[14] = type + " " + conductors;
-        dataRow[15] = new ConductorsCount(conductors).value();
-        dataRow[16] = fazaValue.value();
+        dataRow[14] = type.getValue() + " " + conductors;
+        String cond = new ConductorsCount(conductors.getText()).value();
+        dataRow[15] = cond;
+        if (cond.equals("3") || cond.equals("2")) dataRow[16] = fazaValue.value();
     }
 }
 

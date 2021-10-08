@@ -298,6 +298,12 @@ public class ControlRemoteOffice {
 
     public static void copyDataArrayToSpreadsheet(Object[][] sourceData, int startColumn,
                                                   int startRow, int endColumn, XSpreadsheet xSpreadsheet){
+        System.out.println("XSpreadSheet is " + xSpreadsheet);
+        System.out.println("start column is " + startColumn);
+        System.out.println("end column is " + endColumn);
+        System.out.println("startRow is " + startRow);
+        System.out.println("endRow is " + (sourceData.length + startRow -1));
+        System.out.println("dataRow length is " + sourceData[0].length);
         try {
             XCellRange xCellRange = xSpreadsheet.getCellRangeByPosition(startColumn, startRow, endColumn,
                     sourceData.length + startRow -1);
@@ -305,10 +311,9 @@ public class ControlRemoteOffice {
             xCellRangeData.setDataArray(sourceData);
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
-            ExceptionWindow exceptionWindow =
                     new ExceptionWindow("Ошибка при копировании массива в данные листа" + e.getMessage());
         } catch (RuntimeException e){
-            System.out.println(sourceData.length);
+            System.out.println("Source data length is " + sourceData.length);
             System.out.println(startRow);
             System.out.println(endColumn);
             new ExceptionWindow("RuntimeException при копировании массива в данные листа" + e.getMessage());

@@ -4,11 +4,14 @@ import com.sun.star.comp.helper.BootstrapException;
 import com.sun.star.lang.IndexOutOfBoundsException;
 import com.sun.star.sheet.XSpreadsheet;
 import com.sun.star.uno.Exception;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
@@ -18,6 +21,7 @@ import ru.durnov.view.unitData.reserv.ReservPanelData;
 import ru.durnov.view.unitData.uzo.UZOUnitCreator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TemplateController {
@@ -55,24 +59,45 @@ public class TemplateController {
 
     @FXML
     public void savePanel(ActionEvent actionEvent) throws BootstrapException, Exception {
-        int count = Integer.parseInt(this.rowCount.getText());
-        Object[][] data = new Object[count+1][19];
-        this.userPanelDataList.forEach(userPanelData -> {
-            userPanelData.writeData(data);
-        });
-        System.out.println("data is ready");
-        System.out.println(data);
-        int startRow = new StartRow(ControlRemoteOffice.getCurrentSpreadsheet("Черновик")).startRow();
-        XSpreadsheet xSpreadsheet = ControlRemoteOffice.getCurrentSpreadsheet("Черновик");
-        ControlRemoteOffice.copyDataArrayToSpreadsheet(data, 0, startRow, 19, xSpreadsheet);
+        try {
+            int count = Integer.parseInt(this.rowCount.getText());
+            Object[][] data = new Object[count+1][19];
+            writeDefaultDataValues(data);
+            this.userPanelDataList.forEach(userPanelData -> {
+                userPanelData.writeData(data);
+            });
+            int startRow = new StartRow(ControlRemoteOffice.getCurrentSpreadsheet("Черновик")).startRow();
+            XSpreadsheet xSpreadsheet = ControlRemoteOffice.getCurrentSpreadsheet("Черновик");
+            ControlRemoteOffice.copyDataArrayToSpreadsheet(data, 0, startRow, 18, xSpreadsheet);
+        } catch (NumberFormatException | Exception | BootstrapException e) {
+            System.exit(-1);
+        }
+    }
+
+    /**
+     * Заполняем массив пустыми строками
+     * @param data
+     */
+    private void writeDefaultDataValues(Object[][] data) {
+        for (Object[] dataRow : data) {
+            Arrays.fill(dataRow, "");
+        }
     }
 
     @FXML
     public void clear(ActionEvent actionEvent){
         this.userPanelDataList.clear();
-        breakerVBox.getChildren().clear();
-        uzoVBox.getChildren().clear();
-        cableVBox.getChildren().clear();
+        clearChildren(breakerVBox);
+        clearChildren(uzoVBox);
+        clearChildren(cableVBox);
+    }
+
+    private void clearChildren(VBox vBox) {
+        HBox hBox = (HBox) vBox.getChildren().get(0);
+        ObservableList<Node> children = hBox.getChildren();
+        while (children.size() > 2){
+            children.remove(children.size());
+        }
     }
 
     public void initialize(){
@@ -123,7 +148,7 @@ public class TemplateController {
         }
 
         public int startRow() throws IndexOutOfBoundsException {
-            int row = 0;
+            int row = 3;
             String B = xSpreadsheet.getCellByPosition(1, row).getFormula();
             while ( B != null && ! B.isEmpty()){
                 row++;

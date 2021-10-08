@@ -32,4 +32,9 @@ public class HeaderPanelData implements UserPanelData {
 
         }
     }
+
+    @Override
+    public void clear() {
+
+    }
 }
