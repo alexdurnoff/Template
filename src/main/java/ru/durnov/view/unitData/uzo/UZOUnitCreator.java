@@ -14,11 +14,13 @@ import ru.durnov.UserPanelData;
 import ru.durnov.view.*;
 import ru.durnov.view.unitData.Numbers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UZOUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> uzoPanelList;
+    private final List<Button> removeButtonList = new ArrayList<>();
 
 
     public UZOUnitCreator(ObservableList<Node> children, List<UserPanelData> uzoPanelList) {
@@ -44,7 +46,7 @@ public class UZOUnitCreator implements UnitDataCreator {
 
     @Override
     public void clear() {
-        this.children.clear();
+        this.removeButtonList.forEach(Button::fire);
     }
 
     private ComboBox<String> createCurrentTypeComboBox() {
@@ -81,6 +83,7 @@ public class UZOUnitCreator implements UnitDataCreator {
                 this.uzoPanelList.remove(userPanelData);
             }
         });
+        removeButtonList.add(removeButton);
         VBox linesBox = new NumberVBox(numbersTextField);
         Label removeLabel = new Label("Удалить");
         VBox removeButtonBox = new VBox(removeLabel,removeButton);

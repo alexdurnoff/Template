@@ -86,18 +86,7 @@ public class TemplateController {
 
     @FXML
     public void clear(ActionEvent actionEvent){
-        this.userPanelDataList.clear();
-        clearChildren(breakerVBox);
-        clearChildren(uzoVBox);
-        clearChildren(cableVBox);
-    }
-
-    private void clearChildren(VBox vBox) {
-        HBox hBox = (HBox) vBox.getChildren().get(0);
-        ObservableList<Node> children = hBox.getChildren();
-        while (children.size() > 2){
-            children.remove(children.size());
-        }
+        this.userPanelDataList.forEach(UserPanelData::clear);
     }
 
     public void initialize(){

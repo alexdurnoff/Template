@@ -16,11 +16,13 @@ import ru.durnov.view.UnitDataCreator;
 import ru.durnov.view.UnitPanelData;
 import ru.durnov.view.unitData.Numbers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BreakerUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> userPanelDataList;
+    private final List<Button> removeButtonList = new ArrayList<>();
 
 
     public BreakerUnitCreator(ObservableList<Node> children, List<UserPanelData> unitPanelData) {
@@ -45,10 +47,7 @@ public class BreakerUnitCreator implements UnitDataCreator {
 
     @Override
     public void clear() {
-        System.out.println("size is " + children.size());
-        for (int i = children.size(); i > 0; i--){
-            children.remove(i);
-        }
+        this.removeButtonList.forEach(Button::fire);
     }
 
 
@@ -70,6 +69,7 @@ public class BreakerUnitCreator implements UnitDataCreator {
                 this.userPanelDataList.remove(userPanelData);
             }
         });
+        removeButtonList.add(removeButton);
         VBox removeButtonBox = new NodeWithLabelVBox(removeButton, "Удалить");
         hBox.getChildren().addAll(breakerNameVBox, breakerTypeVBox, currentVBox, numbersVBox, removeButtonBox);
         this.children.add(hBox);

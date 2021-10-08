@@ -16,11 +16,13 @@ import ru.durnov.view.UnitPanelData;
 import ru.durnov.view.unitData.Numbers;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CabelUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> cablePanelList;
+    private final List<Button> removeButtonList = new ArrayList<>();
 
     public CabelUnitCreator(ObservableList<Node> children, List<UserPanelData> cablePanelList) {
         this.children = children;
@@ -43,7 +45,7 @@ public class CabelUnitCreator implements UnitDataCreator {
 
     @Override
     public void clear() {
-        this.children.clear();
+        this.removeButtonList.forEach(Button::fire);
     }
 
 
@@ -63,6 +65,7 @@ public class CabelUnitCreator implements UnitDataCreator {
                 this.cablePanelList.remove(userPanelData);
             }
         });
+        removeButtonList.add(removeButton);
         Label removeLabel = new Label("Удалить");
         VBox removeButtonBox = new VBox(removeLabel,removeButton);
         removeButtonBox.setSpacing(3);
