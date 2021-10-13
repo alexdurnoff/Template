@@ -74,7 +74,8 @@ public class CabelUnitCreator implements UnitDataCreator {
     }
 
     ComboBox<String> createCableTypeComboBox(){
-        return new ComboBox<>(CableUtils.typeItems());
+        ComboBox<String> typeComboBox = new ComboBox<>(CableUtils.typeItems());
+        return typeComboBox;
     }
 
     VBox createConductorsVBox(TextField conductors){

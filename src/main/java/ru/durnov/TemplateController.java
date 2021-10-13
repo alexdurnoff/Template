@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import ru.durnov.model.BreakerMarkItems;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
 import ru.durnov.view.unitData.breakers.BreakerUnitCreator;
@@ -58,10 +59,13 @@ public class TemplateController {
     private TextField reservTextField;
 
     @FXML
+    private TextField purposeMark;
+
+    @FXML
     public void savePanel(ActionEvent actionEvent) throws BootstrapException, Exception {
         try {
             int count = Integer.parseInt(this.rowCount.getText());
-            Object[][] data = new Object[count+1][19];
+            Object[][] data = new Object[count+2][19];
             writeDefaultDataValues(data);
             this.userPanelDataList.forEach(userPanelData -> {
                 userPanelData.writeData(data);
@@ -90,7 +94,8 @@ public class TemplateController {
     }
 
     public void initialize(){
-        userPanelDataList.add(new HeaderPanelData(rowCount, panelName, breakerMark));
+        breakerMark.setItems(new BreakerMarkItems().items());
+        userPanelDataList.add(new HeaderPanelData(rowCount, panelName, purposeMark, breakerMark));
         List<UserPanelData> breakerPanelList = new ArrayList<>();
         userPanelDataList.add(
                 new TypePanelData(

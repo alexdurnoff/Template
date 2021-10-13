@@ -23,7 +23,7 @@
         </VBox>
         <VBox prefWidth="300" spacing="5">
             <Label text="Тип маркировки линий"></Label>
-            <ComboBox prefWidth="200" fx:id="purposeMark"></ComboBox>
+            <TextField prefWidth="200" fx:id="purposeMark"></TextField>
         </VBox>
         <VBox prefWidth="300" spacing="5">
             <Label text="Наименование щита"></Label>

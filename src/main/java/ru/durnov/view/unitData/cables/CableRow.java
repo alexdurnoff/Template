@@ -9,6 +9,7 @@ public class CableRow implements Row {
     private final TextField conductors;
     private final FazaValue fazaValue = new FazaValue();
 
+
     public CableRow(ComboBox<String> type, TextField conductors) {
         this.type = type;
         this.conductors = conductors;
@@ -16,7 +17,7 @@ public class CableRow implements Row {
 
     @Override
     public void writeToRow(Object[] dataRow) {
-        dataRow[14] = type.getValue() + " " + conductors;
+        dataRow[14] = type.getValue() + " " + conductors.getText();
         String cond = new ConductorsCount(conductors.getText()).value();
         dataRow[15] = cond;
         if (cond.equals("3") || cond.equals("2")) dataRow[16] = fazaValue.value();
