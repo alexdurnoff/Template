@@ -55,7 +55,7 @@ public class CabelUnitCreator implements UnitDataCreator {
                            TextField conductors) {
         HBox hBox = new HBox();
         hBox.setSpacing(5);
-        VBox cableTypeVBox = new NodeWithLabelVBox(createCableTypeComboBox(), "Тип кабеля");
+        VBox cableTypeVBox = new NodeWithLabelVBox(type, "Тип кабеля");
         VBox conductorsVBox = createConductorsVBox(conductors);
         VBox numbersVBox= new NumberVBox(numbersTextField);
         Button removeButton = new Button("-");
@@ -74,8 +74,7 @@ public class CabelUnitCreator implements UnitDataCreator {
     }
 
     ComboBox<String> createCableTypeComboBox(){
-        ComboBox<String> typeComboBox = new ComboBox<>(CableUtils.typeItems());
-        return typeComboBox;
+        return new ComboBox<>(CableUtils.typeItems());
     }
 
     VBox createConductorsVBox(TextField conductors){
