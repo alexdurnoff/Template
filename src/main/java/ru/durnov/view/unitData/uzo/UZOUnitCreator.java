@@ -95,13 +95,12 @@ public class UZOUnitCreator implements UnitDataCreator {
     HBox createUzoTypeHBox(TextField uzoType){
         ComboBox<String> uzoTypeComboBox = new ComboBox<>(UzoUtils.typeItems());
         uzoTypeComboBox.setPrefWidth(100);
-        TextField uzoTypeField = new TextField();
-        uzoTypeField.setPrefWidth(100);
-        uzoTypeComboBox.setOnAction(ae -> uzoTypeField.setText(uzoTypeComboBox.getValue()));
-        uzoTypeField.textProperty().addListener(((observable, oldValue, newValue) -> {
+        uzoType.setPrefWidth(100);
+        uzoTypeComboBox.setOnAction(ae -> uzoType.setText(uzoTypeComboBox.getValue()));
+        uzoType.textProperty().addListener(((observable, oldValue, newValue) -> {
             uzoType.setText(newValue);
         }));
-        HBox uzoTypeHBox = new HBox(uzoTypeComboBox, uzoTypeField);
+        HBox uzoTypeHBox = new HBox(uzoTypeComboBox, uzoType);
         uzoTypeHBox.setSpacing(5);
         return uzoTypeHBox;
     }

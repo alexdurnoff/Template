@@ -9,7 +9,7 @@ public class Breakers {
             "Schneider Electric EasyPact CVS250F",
             "Schneider Electric EasyPact CVS250B",
             "Schneider Electric EasyPact CVS160F",
-            "Schneider Electric EasyPact IC60L",
+            "Schneider Electric IC60L",
             "Schneider Electric iDPN N Vigi"
     );
 

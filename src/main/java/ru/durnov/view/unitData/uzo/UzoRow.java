@@ -22,9 +22,20 @@ public class UzoRow implements Row {
 
     @Override
     public void writeToRow(Object[] dataRow) {
+        System.out.println("write new UzoRow " + this);
         if (uzoType.getText() != null) dataRow[10] = uzoType.getText();
-        if (this.nominalCurrent.getText() != null) dataRow[11] = nominalCurrent;
-        dataRow[12] = currentType;
-        dataRow[13] = difCurrent;
+        if (this.nominalCurrent.getText() != null) dataRow[11] = nominalCurrent.getText();
+        dataRow[12] = currentType.getValue();
+        dataRow[13] = difCurrent.getValue();
+    }
+
+    @Override
+    public String toString() {
+        return "UzoRow{" +
+                "uzoType=" + uzoType.getText() +
+                ", nominalCurrent=" + nominalCurrent.getText() +
+                ", difCurrent=" + difCurrent.getValue() +
+                ", currentType=" + currentType.getValue() +
+                '}';
     }
 }
