@@ -1,5 +1,6 @@
 package ru.durnov.view.unitData.uzo;
 
+import com.sun.star.io.IOException;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import ru.durnov.UserPanelData;
 import ru.durnov.view.*;
+import ru.durnov.view.unitData.Config;
 import ru.durnov.view.unitData.Numbers;
 
 import java.util.ArrayList;
@@ -21,11 +23,13 @@ public class UZOUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> uzoPanelList;
     private final List<Button> removeButtonList = new ArrayList<>();
+    private final Config config;
 
 
-    public UZOUnitCreator(ObservableList<Node> children, List<UserPanelData> uzoPanelList) {
+    public UZOUnitCreator(ObservableList<Node> children, List<UserPanelData> uzoPanelList, Config config) {
         this.children = children;
         this.uzoPanelList = uzoPanelList;
+        this.config = config;
     }
 
     @Override
@@ -93,7 +97,12 @@ public class UZOUnitCreator implements UnitDataCreator {
     }
 
     HBox createUzoTypeHBox(TextField uzoType){
-        ComboBox<String> uzoTypeComboBox = new ComboBox<>(UzoUtils.typeItems());
+        ComboBox<String> uzoTypeComboBox = new ComboBox<>();
+        try {
+            uzoTypeComboBox.setItems(config.items());
+        } catch (java.io.IOException e){
+            uzoTypeComboBox.setItems(UzoUtils.typeItems());
+        }
         uzoTypeComboBox.setPrefWidth(100);
         uzoType.setPrefWidth(100);
         uzoTypeComboBox.setOnAction(ae -> uzoType.setText(uzoTypeComboBox.getValue()));

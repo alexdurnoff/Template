@@ -1,0 +1,3 @@
+breakers: ABB S201, ABB S203, ABB XT2N160, ABB XT4N250
+cables: ВВГнг(А)-LS, ВВГнг(А)-FRLS
+uzo:ABB F202, ABB F204, Schneider Electric DPN N Vigi

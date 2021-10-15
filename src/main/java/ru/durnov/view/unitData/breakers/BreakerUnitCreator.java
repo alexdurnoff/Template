@@ -14,8 +14,12 @@ import ru.durnov.view.NodeWithLabelVBox;
 import ru.durnov.view.NumberVBox;
 import ru.durnov.view.UnitDataCreator;
 import ru.durnov.view.UnitPanelData;
+import ru.durnov.view.unitData.Config;
+import ru.durnov.view.unitData.ConfigUtil;
 import ru.durnov.view.unitData.Numbers;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +27,14 @@ public class BreakerUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> userPanelDataList;
     private final List<Button> removeButtonList = new ArrayList<>();
+    private final Config configUtil;
 
 
-    public BreakerUnitCreator(ObservableList<Node> children, List<UserPanelData> unitPanelData) {
+
+    public BreakerUnitCreator(ObservableList<Node> children, List<UserPanelData> unitPanelData, Config configUtil) {
         this.children = children;
         this.userPanelDataList = unitPanelData;
+        this.configUtil = configUtil;
     }
 
     @Override
@@ -78,7 +85,11 @@ public class BreakerUnitCreator implements UnitDataCreator {
     ComboBox<String> createBreakerBox(){
         ComboBox<String> breakerBox = new ComboBox<>();
         breakerBox.setPrefWidth(100);
-        breakerBox.setItems(new Breakers().items());
+        try {
+            breakerBox.setItems(configUtil.items());
+        } catch (IOException e) {
+            breakerBox.setItems(new Breakers().items());
+        }
         return breakerBox;
     }
 

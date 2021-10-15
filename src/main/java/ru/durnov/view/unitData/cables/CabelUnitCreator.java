@@ -13,9 +13,11 @@ import ru.durnov.view.NodeWithLabelVBox;
 import ru.durnov.view.NumberVBox;
 import ru.durnov.view.UnitDataCreator;
 import ru.durnov.view.UnitPanelData;
+import ru.durnov.view.unitData.Config;
 import ru.durnov.view.unitData.Numbers;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,15 @@ public class CabelUnitCreator implements UnitDataCreator {
     private final ObservableList<Node> children;
     private final List<UserPanelData> cablePanelList;
     private final List<Button> removeButtonList = new ArrayList<>();
+    private final Config cableTypesUtil;
 
-    public CabelUnitCreator(ObservableList<Node> children, List<UserPanelData> cablePanelList) {
+
+    public CabelUnitCreator(ObservableList<Node> children,
+                            List<UserPanelData> cablePanelList,
+                            Config cableTypesUtil) {
         this.children = children;
         this.cablePanelList = cablePanelList;
+        this.cableTypesUtil =cableTypesUtil;
     }
 
     @Override
@@ -74,11 +81,18 @@ public class CabelUnitCreator implements UnitDataCreator {
     }
 
     ComboBox<String> createCableTypeComboBox(){
-        return new ComboBox<>(CableUtils.typeItems());
+        ComboBox<String> cableComboBox = new ComboBox<>();
+        try {
+            cableComboBox.setItems(cableTypesUtil.items());
+        } catch (IOException e) {
+            cableComboBox.setItems(CableUtils.typeItems());
+        }
+        return cableComboBox;
     }
 
     VBox createConductorsVBox(TextField conductors){
-        ComboBox<String> conductorsComboBox = new ComboBox<>(CableUtils.conductorsItems());
+        ComboBox<String> conductorsComboBox = new ComboBox<>();
+        conductorsComboBox.setItems(CableUtils.conductorsItems());
         conductorsComboBox.setOnAction(ae -> conductors.setText(conductorsComboBox.getValue()));
         HBox conductorsTextFieldHBox = new HBox(conductorsComboBox, conductors);
         conductorsTextFieldHBox.setSpacing(5);

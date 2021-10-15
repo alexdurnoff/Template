@@ -13,20 +13,25 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import ru.durnov.model.BreakerMarkItems;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
+import ru.durnov.view.unitData.ConfigUtil;
 import ru.durnov.view.unitData.breakers.BreakerUnitCreator;
 import ru.durnov.view.unitData.cables.CabelUnitCreator;
 import ru.durnov.view.unitData.reserv.ReservPanelData;
 import ru.durnov.view.unitData.uzo.UZOUnitCreator;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TemplateController {
     private final List<UserPanelData> userPanelDataList = new ArrayList<>();
+    private Path path;
 
     @FXML
     private TextField panelName;
@@ -94,6 +99,7 @@ public class TemplateController {
     }
 
     public void initialize(){
+        this.path = setupPath();
         breakerMark.setItems(new BreakerMarkItems().items());
         userPanelDataList.add(new HeaderPanelData(rowCount, panelName, purposeMark, breakerMark));
         List<UserPanelData> breakerPanelList = new ArrayList<>();
@@ -103,7 +109,8 @@ public class TemplateController {
                         addBreakerButton,
                         new BreakerUnitCreator(
                                 breakerVBox.getChildren(),
-                                breakerPanelList
+                                breakerPanelList,
+                                new ConfigUtil("breakers", path)
                         )
                 )
         );
@@ -114,7 +121,8 @@ public class TemplateController {
                         addCableButton,
                         new CabelUnitCreator(
                                 cableVBox.getChildren(),
-                                cablePanelList
+                                cablePanelList,
+                                new ConfigUtil("cables", path)
                         )
                 )
         );
@@ -126,12 +134,20 @@ public class TemplateController {
                         addUZOButton,
                         new UZOUnitCreator(
                                 uzoVBox.getChildren(),
-                                uzoPanelList
+                                uzoPanelList,
+                                new ConfigUtil("uzo", path)
                         )
                 )
         );
         userPanelDataList.add(new ReservPanelData(reservTextField));
 
+    }
+
+    private Path setupPath() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выбираем конфигурационный файл");
+        File file = fileChooser.showOpenDialog(panelName.getScene().getWindow());
+        return file.toPath();
     }
 
     static class StartRow{
