@@ -18,20 +18,20 @@
           AnchorPane.topAnchor="10" spacing="20"
           style="-fx-border-style: solid; -fx-border-width:2px; -fx-border-color: blue; -fx-border-radius:3px; -fx-padding: 15px">
         <VBox prefWidth="300" spacing="5">
-            <Label text="Тип маркировки автоматов"></Label>
-            <ComboBox prefWidth="200" fx:id="breakerMark"></ComboBox>
+            <Label text="Тип маркировки автоматов"/>
+            <ComboBox prefWidth="200" fx:id="breakerMark"/>
         </VBox>
         <VBox prefWidth="300" spacing="5">
-            <Label text="Тип маркировки линий"></Label>
-            <TextField prefWidth="200" fx:id="purposeMark"></TextField>
+            <Label text="Тип маркировки линий"/>
+            <TextField prefWidth="200" fx:id="purposeMark"/>
         </VBox>
         <VBox prefWidth="300" spacing="5">
-            <Label text="Наименование щита"></Label>
-            <TextField fx:id="panelName" prefWidth="400"></TextField>
+            <Label text="Наименование щита"/>
+            <TextField fx:id="panelName" prefWidth="400"/>
         </VBox>
         <VBox prefWidth="300" spacing="5">
-            <Label text="Количество строк"></Label>
-            <TextField fx:id="rowCount" prefWidth="150"></TextField>
+            <Label text="Количество строк"/>
+            <TextField fx:id="rowCount" prefWidth="150"/>
         </VBox>
     </HBox>
     <HBox AnchorPane.leftAnchor="10"
@@ -45,8 +45,8 @@
                  -fx-padding: 9px; -fx-background-color: GAINSBORO">
             <VBox fx:id="breakerVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
-                    <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER" id="breakerLabel"></Label>
-                    <Button text="+" fx:id="addBreakerButton" id="breakerButton"></Button>
+                    <Label text="Панель автоматов" prefWidth="200" textAlignment="CENTER" id="breakerLabel"/>
+                    <Button text="+" fx:id="addBreakerButton" id="breakerButton"/>
                 </HBox>
             </VBox>
         </ScrollPane>
@@ -58,8 +58,8 @@
                 -fx-padding: 9px; -fx-background-color: GAINSBORO">
             <VBox fx:id="uzoVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
-                    <Label text="Панель УЗО" prefWidth="200" textAlignment="CENTER"></Label>
-                    <Button text="+" fx:id="addUZOButton"></Button>
+                    <Label text="Панель УЗО" prefWidth="200" textAlignment="CENTER"/>
+                    <Button text="+" fx:id="addUZOButton"/>
                 </HBox>
             </VBox>
         </ScrollPane>
@@ -76,8 +76,8 @@
                 -fx-padding: 9px; -fx-background-color: GAINSBORO">
             <VBox fx:id="cableVBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
-                    <Label text="Панель кабелей" prefWidth="200" textAlignment="CENTER"></Label>
-                    <Button text="+" fx:id="addCableButton"></Button>
+                    <Label text="Панель кабелей" prefWidth="200" textAlignment="CENTER"/>
+                    <Button text="+" fx:id="addCableButton"/>
                 </HBox>
             </VBox>
         </ScrollPane>
@@ -90,10 +90,10 @@
             <VBox fx:id="reservBox" spacing="10" prefHeight="228" prefWidth="608" style="-fx-background-color: GAINSBORO">
                 <HBox spacing="10">
                     <VBox prefWidth="600" spacing="10">
-                        <Label text="Панель резервных линий" prefWidth="200" textAlignment="CENTER"></Label>
+                        <Label text="Панель резервных линий" prefWidth="200" textAlignment="CENTER"/>
                         <HBox prefWidth="600" spacing="10">
                             <Label text="Добавить номера линий"></Label>
-                            <TextField fx:id="reservTextField" prefWidth="400"></TextField>
+                            <TextField fx:id="reservTextField" prefWidth="400"/>
                         </HBox>
                     </VBox>
                 </HBox>
