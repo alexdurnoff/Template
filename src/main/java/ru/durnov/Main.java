@@ -17,7 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/RootPanel.fxml"));
-        AnchorPane rootPanel = (AnchorPane) loader.load();
+        AnchorPane rootPanel = loader.load();
         TemplateController templateController = loader.getController();
         templateController.setStage(primaryStage);
         Scene scene = new Scene(rootPanel, 1300, 700);
