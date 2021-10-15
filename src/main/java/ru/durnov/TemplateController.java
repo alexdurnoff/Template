@@ -11,9 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ru.durnov.model.BreakerMarkItems;
 import ru.durnov.view.HeaderPanelData;
 import ru.durnov.view.TypePanelData;
@@ -32,6 +35,8 @@ import java.util.List;
 public class TemplateController {
     private final List<UserPanelData> userPanelDataList = new ArrayList<>();
     private Path path;
+    private Stage stage;
+
 
     @FXML
     private TextField panelName;
@@ -140,13 +145,12 @@ public class TemplateController {
                 )
         );
         userPanelDataList.add(new ReservPanelData(reservTextField));
-
     }
 
     private Path setupPath() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Выбираем конфигурационный файл");
-        File file = fileChooser.showOpenDialog(panelName.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(stage);
         return file.toPath();
     }
 
@@ -166,6 +170,10 @@ public class TemplateController {
             }
             return row;
         }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
 
